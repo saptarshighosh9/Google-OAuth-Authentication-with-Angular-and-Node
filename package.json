@@ -1,0 +1,16 @@
+{
+  "name": "node-angular-authentication",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "cors": "^2.7.1",
+    "express": "~3.4.4",
+    "fs-extra": "^0.30.0",
+    "jsonwebtoken": "latest",
+    "lodash": "latest",
+    "mongoose": "~3.8.1",
+    "node-rsa": "^0.4.0",
+    "path": "^0.12.7",
+    "request": "^2.71.0"
+  }
+}

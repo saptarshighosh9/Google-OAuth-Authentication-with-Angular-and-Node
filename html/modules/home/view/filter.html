@@ -1,0 +1,31 @@
+<div class="col-md-12" ng-controller="feedCtrl">
+	<small>Filter</small>
+	<hr>
+	<div class="row">
+		<div class="col-md-12">
+			<h5>Current Filters</h5>
+			<!--
+			<div ng-repeat="t in locpref track by $index">
+					 <span class="label label-warning">
+						<a ng-click="feedfilter('r',t)"  style="cursor:pointer;color:white">	<small>{{t}}<small>	</a>
+					</span>
+					<br>
+			</div>	-->		
+			<div ng-repeat="t in tagpref track by $index">
+					 <span class="label label-default">
+						<a ng-click="feedfilter('r',t)"  style="cursor:pointer;color:white">	{{t}} </a>
+					</span>
+					<br>
+			</div>	
+			<small ng-if="tagpref.length==0">No feed peference added<br></small>	
+			<h5>Add Tag Filters</h5>
+			<div ng-repeat="t in addtaglist track by $index">
+					 <span class="label label-info">
+						<a ng-click="feedfilter('a',t)"  style="cursor:pointer;color:white">	{{t}}	</a>
+					</span>
+					<br>
+			</div>
+			<hr>
+		</div>
+	</div>
+</div>	

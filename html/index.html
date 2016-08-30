@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width">
+        <meta name="description" content="">
+        <meta name="author" content="Saptarshi Ghosh">
+        <title>Auth</title>
+        <style type="text/css">
+            body {
+                width: 100%;
+                height: 100%;
+                font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                margin: 0 0 35px;
+                font-weight: 700;
+                letter-spacing: 1px;
+            }
+
+            p {
+                margin: 0 0 25px;
+                font-size: 18px;
+            }
+
+
+            a {
+                color: #42dca3;
+                cursor: pointer;
+            }
+
+            a:hover,
+            a:focus {
+                text-decoration: none;
+                color: #1d9b6c;
+            }
+
+            img {
+                max-height: 400px;
+                max-width: 500px; 
+                overflow: hidden                
+            }
+
+
+            .eachpage {
+                width: 100%;
+                height: 100%;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                background-size: cover;
+                -o-background-size: cover;
+            }
+
+            .navb {
+                opacity: 0.7;
+                background-color: #fff;
+            }
+            .navbottom {
+                opacity: 0.7;
+                 background-color: #fff;
+            }
+            .mobilenav {
+                opacity: 0.7;
+                background-color: #fff;
+                padding: 3%;
+            }
+
+            .mobilenavlinks a {
+                color: red;
+            }
+
+            .mobilenavbottom {
+                opacity: 0.7;
+                background-color: #fff;
+                padding: 5%;
+            }
+
+            .mobilenavlinksbottom a {
+                color: red;
+            }
+
+            .mainpage {
+                padding: 2%;
+            }
+
+            .slate {
+                padding-top: 40px;
+            }
+
+            hr.star-light,
+            hr.star-primary {
+                margin: 25px auto 30px;
+                padding: 0;
+                max-width: 250px;
+                border: 0;
+                border-top: solid 5px;
+                text-align: center;
+            }
+
+            hr.star-light:after,
+            hr.star-primary:after {
+                content: "\f005";
+                display: inline-block;
+                position: relative;
+                top: -.8em;
+                padding: 0 .25em;
+                font-family: FontAwesome;
+                font-size: 2em;
+            }
+
+
+            hr.star-primary {
+                border-color: #2c3e50;
+            }
+
+            hr.star-primary:after {
+                color: #2c3e50;
+                background-color: #fff;
+            }
+
+            .floating-label-form-group {
+                position: relative;
+                margin-bottom: 0;
+                padding-bottom: .5em;
+                border-bottom: 1px solid #eee;
+            }
+
+            .floating-label-form-group input,
+            .floating-label-form-group textarea {
+                z-index: 1;
+                position: relative;
+                padding-right: 0;
+                padding-left: 0;
+                border: 0;
+                border-radius: 0;
+                font-size: 1.5em;
+                background: 0 0;
+                box-shadow: none!important;
+                resize: none;
+            }
+
+            .floating-label-form-group label {
+                display: block;
+                z-index: 0;
+                position: relative;
+                top: 2em;
+                margin: 0;
+                font-size: .85em;
+                line-height: 1.764705882em;
+                vertical-align: middle;
+                vertical-align: baseline;
+                opacity: 0;
+                -webkit-transition: top .3s ease,opacity .3s ease;
+                -moz-transition: top .3s ease,opacity .3s ease;
+                -ms-transition: top .3s ease,opacity .3s ease;
+                transition: top .3s ease,opacity .3s ease;
+            }
+
+            .floating-label-form-group::not(:first-child) {
+                padding-left: 14px;
+                border-left: 1px solid #eee;
+            }
+
+            .floating-label-form-group-with-value label {
+                top: 0;
+                opacity: 1;
+            }
+
+            .floating-label-form-group-with-focus label {
+                color: #18bc9c;
+            }
+
+            form .row:first-child .floating-label-form-group {
+                border-top: 1px solid #eee;
+            }
+
+            .ta-editor {
+                min-height: 300px;
+                font-size: 100%;
+            }
+        </style>
+        <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <style type="text/css">
+            .ta-hidden-input {
+                width: 1px;
+                height: 1px;
+                border: none;
+                margin: 0;
+                padding: 0;
+                position: absolute;
+                top: -10000px;
+                left: -10000px;
+                opacity: 0;
+                overflow: hidden;
+            }
+
+            /* add generic styling for the editor */
+            .ta-root.focussed > .ta-scroll-window.form-control {
+                border-color: #66afe9;
+                outline: 0;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+                -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+            }
+
+            .ta-editor.ta-html, .ta-scroll-window.form-control {
+                min-height: 300px;
+                height: auto;
+                overflow: auto;
+                font-family: inherit;
+                font-size: 100%;
+            }
+
+            .ta-scroll-window.form-control {
+                position: relative;
+                padding: 0;
+            }
+
+            .ta-scroll-window > .ta-bind {
+                height: auto;
+                min-height: 300px;
+                padding: 6px 12px;
+            }
+
+            .ta-editor:focus {
+                user-select: text;
+            }
+
+            .ta-insert-video {             
+                max-height: 200px;
+                max-width: 300px;
+                overflow: hidden
+            }
+
+            /* add the styling for the awesomness of the resizer */
+            .ta-resizer-handle-overlay {
+                z-index: 100;
+                position: absolute;
+                display: none;
+            }
+
+            .ta-resizer-handle-overlay > .ta-resizer-handle-info {
+                position: absolute;
+                bottom: 16px;
+                right: 16px;
+                border: 1px solid black;
+                background-color: #FFF;
+                padding: 0 4px;
+                opacity: 0.7;
+            }
+
+            .ta-resizer-handle-overlay > .ta-resizer-handle-background {
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
+                left: 5px;
+                top: 5px;
+                border: 1px solid black;
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+
+            .ta-resizer-handle-overlay > .ta-resizer-handle-corner {
+                width: 10px;
+                height: 10px;
+                position: absolute;
+            }
+
+            .ta-resizer-handle-overlay > .ta-resizer-handle-corner-tl{
+                top: 0;
+                left: 0;
+                border-left: 1px solid black;
+                border-top: 1px solid black;
+            }
+
+            .ta-resizer-handle-overlay > .ta-resizer-handle-corner-tr{
+                top: 0;
+                right: 0;
+                border-right: 1px solid black;
+                border-top: 1px solid black;
+            }
+
+            .ta-resizer-handle-overlay > .ta-resizer-handle-corner-bl{
+                bottom: 0;
+                left: 0;
+                border-left: 1px solid black;
+                border-bottom: 1px solid black;
+            }
+
+            .ta-resizer-handle-overlay > .ta-resizer-handle-corner-br{
+                bottom: 0;
+                right: 0;
+                border: 1px solid black;
+                cursor: se-resize;
+                background-color: white;
+            }
+
+            /* copy the popover code from bootstrap so this will work even without it */
+            .popover {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1060;
+                display: none;
+                max-width: 276px;
+                padding: 1px;
+                font-size: 14px;
+                font-weight: normal;
+                line-height: 1.42857143;
+                text-align: left;
+                white-space: normal;
+                background-color: #fff;
+                -webkit-background-clip: padding-box;
+                        background-clip: padding-box;
+                border: 1px solid #ccc;
+                border: 1px solid rgba(0, 0, 0, .2);
+                border-radius: 6px;
+                -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+                        box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+            }
+            .popover.top {
+                margin-top: -10px;
+            }
+            .popover.bottom {
+                margin-top: 10px;
+            }
+            .popover-title {
+                padding: 8px 14px;
+                margin: 0;
+                font-size: 14px;
+                background-color: #f7f7f7;
+                border-bottom: 1px solid #ebebeb;
+                border-radius: 5px 5px 0 0;
+            }
+            .popover-content {
+                padding: 9px 14px;
+            }
+            .popover > .arrow,
+            .popover > .arrow:after {
+                position: absolute;
+                display: block;
+                width: 0;
+                height: 0;
+                border-color: transparent;
+                border-style: solid;
+            }
+            .popover > .arrow {
+                border-width: 11px;
+            }
+            .popover > .arrow:after {
+                content: "";
+                border-width: 10px;
+            }
+            .popover.top > .arrow {
+                bottom: -11px;
+                left: 50%;
+                margin-left: -11px;
+                border-top-color: #999;
+                border-top-color: rgba(0, 0, 0, .25);
+                border-bottom-width: 0;
+            }
+            .popover.top > .arrow:after {
+                bottom: 1px;
+                margin-left: -10px;
+                content: " ";
+                border-top-color: #fff;
+                border-bottom-width: 0;
+            }
+            .popover.bottom > .arrow {
+                top: -11px;
+                left: 50%;
+                margin-left: -11px;
+                border-top-width: 0;
+                border-bottom-color: #999;
+                border-bottom-color: rgba(0, 0, 0, .25);
+            }
+            .popover.bottom > .arrow:after {
+                top: 1px;
+                margin-left: -10px;
+                content: " ";
+                border-top-width: 0;
+                border-bottom-color: #fff;
+            }
+        </style>
+        <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
+        <script src="https://cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js"></script>
+        <script src="https://cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js" async></script>
+        <script src="https://apis.google.com/js/platform.js"></script>
+        <script type="text/javascript" src="lib/URLConstants.js"></script>
+        <script src="lib/xpl.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid" ng-app="authapp">
+            <nav class="navbar navbar-default navbar-fixed-top" ng-controller="headerCtrl" ng-if="allownav">
+                <div class="navb">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" ui-sref="home({reload:true})" style="font-weight: bold;">                           
+                                OAuth and Native Login
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="slate" ui-view></div>      
+        </div>
+    </body>
+</html>

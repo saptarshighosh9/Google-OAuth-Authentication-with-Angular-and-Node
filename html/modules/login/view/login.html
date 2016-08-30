@@ -1,0 +1,178 @@
+<div class="eachpage" style="padding-top:10px">
+    <div class="row">
+        <div class="col-xs-12 col-md-offset-2 col-md-8 mainpage">
+
+            <!-- Template when user is not logged in -->
+            <div class="row" style="padding-bottom:30px" ng-if="!checkinglogedin">
+
+                <!-- Login/Signup Template-->
+
+                <div class="col-xs-10 col-xs-offset-1 col-md-12">
+                    <div class="row">
+                        <h2>OAuth and Native Login Integration<hr></h2>
+                    </div>
+                    <div class="row" style="text-align: center;">
+                        <h3 ng-if="!reg && logint">Login</h3>
+                        <h3 ng-if="reg && !logint">Signup</h3>
+                    </div>
+                    <div class="row">
+                        <!-- OAuth Template-->
+                        <div class="col-xs-12 col-md-5" ng-if="reg || logint">
+                             <div id="my-signin2"></div>
+                            <button type="button" id="customBtn" ng-click="googleauth()" class="btn btn-danger btn-lg btn-block" ng-if="!isauth">Continue with Google</button><br>
+                            <button type="button" id="customBtn" ng-click="facebookauth()" class="btn btn-primary btn-lg btn-block" ng-if="!isauth" disabled>Continue with Facebook</button>   
+                            <br>
+                            <small ng-if="!reg && logint"><a  style="font-family: 'Source Sans Pro', sans-serif;cursor:pointer" ng-click="registershow()">Signup with email</a></small>
+                            <small ng-if="reg && !logint">Already have an account with us ? For email login click <a ng-click="registerhide()">here</a></small>
+                        </div>
+                        <!-- Login Template -->
+                        <div class="col-xs-12 col-md-6" ng-if="!reg && logint">
+                            <form name="loginform" ng-submit="login()" novalidate>
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                                        <label>Email</label>
+                                        <input type="text" class="form-control" placeholder="username" name="loginemail" id="email"  ng-model="loginemail" required>
+                                        <small ng-show="loginform.loginemail.$invalid && !loginform.loginemail.$pristine" class="help-block">Enter a valid email</small>
+                                    </div>
+                                </div>
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                                        <label>Password</label>
+                                        <input type="password" class="form-control" placeholder="Password" id="loginpassword"  ng-model="loginpassword" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group col-xs-12">
+                                        <button type="submit" class="btn btn-success btn-lg" ng-disabled="loginform.$invalid" id="loginbtn">Login</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Signup Template -->
+                        <div class="col-xs-12 col-md-6" ng-if="!logint && reg">
+                            <form name="userForm" ng-submit="register()" novalidate>
+                                <!-- Email -->
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                                        <label>Email</label>
+                                        <input class="form-control" placeholder="Email" type="email" name="eemail" ng-model="user.email" required>
+                                        <small ng-show="userForm.eemail.$invalid && !userForm.eemail.$pristine" class="help-block">Enter a valid email</small>
+                                    </div>
+                                </div>
+                                <!-- Password -->
+                                <div class="row control-group">
+                                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                                        <label>Password</label>
+                                        <input type="password" class="form-control" placeholder="password" name="ppassword" ng-model="user.password" ng-minlength="5" ng-maxlength="30" required>
+                                        <small ng-show="userForm.ppassword.$error.minlength || userForm.ppassword.$error.maxlength" class="help-block">Password should be of minimum 5 charecters</small>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="form-group col-xs-12">
+                                        <button type="submit" class="btn btn-success btn-lg" ng-disabled="userForm.$invalid">Signup</button>
+                                    </div>
+                                </div>
+                            </form> 
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Account Setup Template -->
+                <div class="col-xs-12 col-md-12" ng-if="!logint && !reg && accountsetup">
+
+                    <!-- Signing up with google -->
+
+                    <div ng-if="google_accsetup">
+                        <div class="row">
+                            <h2>Setting up Your Account</h2><hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-2">
+                                <h5>Set a password for Email Login</h5><br>
+                                <form ng-submit="origin_google_setnativepassword()" ng-if="!passwordset" ng-init="nativeemail = nativeloginemail">
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="nativeemail" required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="nativepassword" required>
+                                  </div>
+                                  <button type="submit" class="btn btn-default">Set Password</button>
+                                </form>
+                                <h5 ng-if="passwordset"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Password has been set successfully</h5>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-2">
+                                <h4>Facebook : <button type="button" id="customBtn" class="btn btn-primary" disabled>Connect Your Facebook Account</button></h4>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Signing up with facebook -->
+
+
+                    <div ng-if="fb_accsetup">
+                        <div class="row" style="text-align:center">
+                            <h2>Setting up Your Account</h2><hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-2">
+                                <h5>Set a password for Email Login</h5><br>
+                                <form ng-submit="origin_facebook_setnativepassword()" ng-if="!passwordset" ng-init="nativeemail = nativeloginemail">
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1">Email address</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" ng-model="nativeemail" required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="nativepassword" required>
+                                  </div>
+                                  <button type="submit" class="btn btn-default">Set Password</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-2">
+                                <h4>Google :<button type="button" id="customBtn"  class="btn btn-danger">Connect with your Google Account</button></h4>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Signing up with email -->
+
+                    <div ng-if="native_accsetup">
+                        <div class="row">
+                            <h3>Setting up Your Account</h3><hr>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 col-md-offset-2">
+                                <button type="button" id="customBtn" ng-click="addgoogleacc()" class="btn btn-danger" ng-if="addgoogleaccbtn">Connect with your Google Account</button>
+                                <button type="button" id="customBtn" class="btn btn-danger" ng-if="!addgoogleaccbtn" disabled><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Connected with your Google Account</button>
+                            </div>
+                            <div class="col-md-3 col-md-offset-1">
+                                <button type="button" id="customBtn" ng-click="facebookauth()" class="btn btn-primary" disabled>Connect with your Facebook Account</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-2">
+                            <a ng-click="continue()">Continue</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
